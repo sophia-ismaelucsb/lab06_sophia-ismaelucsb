@@ -130,7 +130,7 @@ int main(int argc, char** argv){
 
 
         if( prefixes_map[pre].empty() ){
-            cout << "No movies found with prefix "<<"<replace with prefix>" << endl << endl;
+            cout << "No movies found with prefix "<< pre << endl << endl;
         }else{
             for (Movies const& movie: prefixes_map[pre]){
                 
