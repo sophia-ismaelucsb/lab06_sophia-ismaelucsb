@@ -1,6 +1,6 @@
 // Winter'24
 // Instructor: Diba Mirza
-// Student name: 
+// Student name: Sophia Ismael and Jacob Ismael
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -93,6 +93,8 @@ int main(int argc, char** argv){
 
 
     vector<string> prefixes;
+    vector<Movies> best_ratings;
+    bool highest = true;
     unordered_map<string, set<Movies>> prefixes_map;
     while (getline (prefixFile, line)) {
         if (!line.empty()) {
@@ -131,11 +133,19 @@ int main(int argc, char** argv){
             cout << "No movies found with prefix "<<"<replace with prefix>" << endl << endl;
         }else{
             for (Movies const& movie: prefixes_map[pre]){
+                
                 cout << movie.getName() << ", " << movie.getRating() << endl;
+
+                if(highest){
+                    best_ratings.push_back(movie);
+                    highest = false;
+                }
             }
 
             cout << endl;
         }
+
+        highest = true;
 
 
         
@@ -152,7 +162,11 @@ int main(int argc, char** argv){
 
     //  For each prefix,
     //  Print the highest rated movie with that prefix if it exists.
-    cout << "Best movie with prefix " << "<replace with prefix>" << " is: " << "replace with movie name" << " with rating " << std::fixed << std::setprecision(1) << "replace with movie rating" << endl;
+
+    for(int i = 0; i < prefixes.size(); i++){
+        cout << "Best movie with prefix " << prefixes.at(i) << " is: " << best_ratings.at(i).getName() << " with rating " << std::fixed << std::setprecision(1) << best_ratings.at(i).getRating() << endl;
+
+    }
 
     return 0;
 }
