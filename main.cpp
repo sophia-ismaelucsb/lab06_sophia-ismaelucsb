@@ -38,6 +38,8 @@ int main(int argc, char** argv){
   
     // Create an object of a STL data-structure to store all the moviesw
     set<Movies> movies_set;
+    unordered_map<string, double> movies_map;
+    set<string> movies_names;
     string line, movieName;
     double movieRating;
     // Read each file and store the name and rating
@@ -49,6 +51,8 @@ int main(int argc, char** argv){
             Movies temp(movieName, movieRating);
             // cout << movieName << " has rating " << movieRating << endl;
             movies_set.insert(temp);
+            movies_names.insert(movieName);
+            movies_map.insert({movieName, movieRating});
 
             
     }
@@ -56,11 +60,27 @@ int main(int argc, char** argv){
     movieFile.close();
 
     if (argc == 2){
+
+            
             //print all the movies in ascending alphabetical order of movie names
-            for (Movies const& movie: movies_set){
-                cout << movie.getName() << ", " << movie.getRating() << endl;
+
+            for(string mov_name: movies_names){
+                cout << mov_name << ", " << movies_map[mov_name] << endl;
             }
+            
+
+
+            // for (Movies const& movie: movies_set){
+            //     cout << movie.getName() << ", " << movie.getRating() << endl;
+            // }
+
+
             return 0;
+
+            
+
+
+          
     }
 
     ifstream prefixFile (argv[2]);
