@@ -13,6 +13,8 @@
 #include <set>
 #include <queue>
 #include <sstream>
+
+#include <unordered_map>
 using namespace std;
 
 #include "utilities.h"
@@ -34,8 +36,8 @@ int main(int argc, char** argv){
         exit(1);
     }
   
-    // Create an object of a STL data-structure to store all the movies
-
+    // Create an object of a STL data-structure to store all the moviesw
+    set<Movies> movies_set;
     string line, movieName;
     double movieRating;
     // Read each file and store the name and rating
@@ -44,12 +46,20 @@ int main(int argc, char** argv){
             // to construct your Movie objects
             // cout << movieName << " has rating " << movieRating << endl;
             // insert elements into your data structure
+            Movies temp(movieName, movieRating);
+            // cout << movieName << " has rating " << movieRating << endl;
+            movies_set.insert(temp);
+
+            
     }
 
     movieFile.close();
 
     if (argc == 2){
             //print all the movies in ascending alphabetical order of movie names
+            for (Movies const& movie: movies_set){
+                cout << movie.getName() << ", " << movie.getRating() << endl;
+            }
             return 0;
     }
 
@@ -60,17 +70,65 @@ int main(int argc, char** argv){
         exit(1);
     }
 
+
+
     vector<string> prefixes;
+    unordered_map<string, set<Movies>> prefixes_map;
     while (getline (prefixFile, line)) {
         if (!line.empty()) {
             prefixes.push_back(line);
+            prefixes_map.insert({line, set<Movies>()});
+
+
+            
+            //return 0;
         }
     }
+    
+    for(int i = 0; i < prefixes.size(); i++){
+        //go through movies_set and add movie to prefix_map if it has the same prefix
+        
+        //cout << prefixes.at(i) << endl;
+
+        int pre_len = prefixes.at(i).size();
+        string pre = prefixes.at(i);
+
+        
+        
+        for (Movies const& movie: movies_set){
+
+            //cout << movie.getName().substr(0, pre_len) << endl;
+
+
+            if(movie.getName().substr(0, pre_len) == pre){
+                prefixes_map[pre].insert(movie);
+                //cout << movie.getName() << endl;
+            }
+        }
+
+
+        if( prefixes_map[pre].empty() ){
+            cout << "No movies found with prefix "<<"<replace with prefix>" << endl << endl;
+        }else{
+            for (Movies const& movie: prefixes_map[pre]){
+                cout << movie.getName() << ", " << movie.getRating() << endl;
+            }
+
+            cout << endl;
+        }
+
+
+        
+    }
+
+    
 
     //  For each prefix,
     //  Find all movies that have that prefix and store them in an appropriate data structure
     //  If no movie with that prefix exists print the following message
-    cout << "No movies found with prefix "<<"<replace with prefix>" << endl << endl;
+
+
+    
 
     //  For each prefix,
     //  Print the highest rated movie with that prefix if it exists.
