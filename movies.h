@@ -11,7 +11,6 @@ class Movies{
         Movies(string _name = "UNTITLED", double _rating = 0.0) : name(_name), rating(_rating){}
 
         bool operator<(const Movies &m1) const;
-        bool operator>(const Movies &m1) const;
         //friend ostream& operator<<(ostream& os, Movies& movie);
         
         string getName() const{return name;}

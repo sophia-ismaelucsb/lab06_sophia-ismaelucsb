@@ -107,13 +107,12 @@ int main(int argc, char** argv){
         }
     }
     
-    for(int i = 0; i < prefixes.size(); i++){
+    for(string const& pre: prefixes){
         //go through movies_set and add movie to prefix_map if it has the same prefix
         
         //cout << prefixes.at(i) << endl;
 
-        int pre_len = prefixes.at(i).size();
-        string pre = prefixes.at(i);
+        int pre_len = pre.size();
 
         
         
@@ -132,6 +131,8 @@ int main(int argc, char** argv){
         if( prefixes_map[pre].empty() ){
             cout << "No movies found with prefix "<< pre << endl << endl;
         }else{
+
+            //cout << "prefix: " << pre << endl;
             for (Movies const& movie: prefixes_map[pre]){
                 
                 cout << movie.getName() << ", " << movie.getRating() << endl;
@@ -163,8 +164,12 @@ int main(int argc, char** argv){
     //  For each prefix,
     //  Print the highest rated movie with that prefix if it exists.
 
-    for(int i = 0; i < prefixes.size(); i++){
-        cout << "Best movie with prefix " << prefixes.at(i) << " is: " << best_ratings.at(i).getName() << " with rating " << std::fixed << std::setprecision(1) << best_ratings.at(i).getRating() << endl;
+    int counter = 0;
+    for(string const& pre: prefixes){
+        if( !prefixes_map[pre].empty() ){
+            cout << "Best movie with prefix " << pre << " is: " << best_ratings.at(counter).getName() << " with rating " << std::fixed << std::setprecision(1) << best_ratings.at(counter).getRating() << endl;
+            counter++;
+        }
 
     }
 
