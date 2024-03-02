@@ -1,8 +1,10 @@
 #include "movies.h"
+#include <math.h>
+
 using namespace std;
 
 bool Movies::operator<(const Movies &m1) const{
-    if(this->rating == m1.getRating()){
+    if( fabs(this->rating - m1.getRating()) < 0.00001){
         return this->name < m1.getName();
     }
 
