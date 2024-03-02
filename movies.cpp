@@ -3,7 +3,7 @@ using namespace std;
 
 bool Movies::operator<(const Movies &m1) const{
     if(this->rating == m1.getRating()){
-        return this->name > m1.getName();
+        return this->name < m1.getName();
     }
 
     return this->rating > m1.rating;
@@ -12,6 +12,7 @@ bool Movies::operator<(const Movies &m1) const{
     
 
 };
+
 
 
 
